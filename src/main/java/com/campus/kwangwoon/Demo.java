@@ -17,6 +17,7 @@ public class Demo {
     }
 
     public static void main(String[] args) throws Exception {
+        System.out.println("협업환경 구성 완료");
         Path dataDir = resolveDataDir(); // ← 여기만 바뀜
         Graph g = Graph.load(dataDir);
         System.out.println(g.summary());
