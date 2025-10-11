@@ -1,0 +1,35 @@
+# --- Java 빌드 산출물 ---
+*.class
+*.jar
+*.war
+*.ear
+
+# Maven / Gradle 빌드 폴더
+target/
+build/
+out/
+
+# --- IDE / 편집기 설정 ---
+.vscode/
+.idea/
+*.iml
+
+# --- 로그 & 환경 변수 파일 ---
+*.log
+*.env
+
+# --- OS 자동 생성 파일 ---
+# Windows
+Thumbs.db
+Desktop.ini
+# macOS (혹시 협업할 때 맥 유저 있으면 필요)
+.DS_Store
+
+# --- 임시 파일 ---
+*.swp
+*.tmp
+*.bak
+
+# --- 기타 (원하는 경우 추가) ---
+# 예: 로컬에서만 쓰는 설정
+config/local-*.json

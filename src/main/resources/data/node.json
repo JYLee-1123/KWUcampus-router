@@ -1,0 +1,92 @@
+[
+    {
+        "id": "BH-MG",
+        "name": "BimaHall-MainGate",
+        "location": {
+            "lat": 37.619501,
+            "lng": 127.059594
+        },
+        "stair": true,
+        "crub": true
+    },
+    {
+        "id": "BH-SG",
+        "name": "BimaHall-SideGate",
+        "location": {
+            "lat": 37.619789,
+            "lng": 127.060158
+        },
+        "stair": false,
+        "crub": true
+    },
+    {
+        "id": "BH-BG",
+        "name": "BimaHall-BackGate",
+        "location": {
+            "lat": 37.619739,
+            "lng": 127.060254
+        },
+        "stair": false,
+        "crub": false
+    },
+    {
+        "id": "SH-MG",
+        "name": "SaebitHallMainGate",
+        "location": {
+            "lat": 37.619820,
+            "lng": 127.060721
+        },
+        "stair": false,
+        "crub": false
+    },
+    {
+        "id": "CH-MG",
+        "name": "ChambitHall-MainGate",
+        "location": {
+            "lat": 37.619387,
+            "lng": 127.060871
+        },
+        "stair": false,
+        "crub": false
+    },
+    {
+        "id": "GH-2MG",
+        "name": "GinyeomHall-2ndFloorMainGate",
+        "location": {
+            "lat": 37.619949,
+            "lng": 127.508844
+        },
+        "stair": false,
+        "crub": false
+    },
+    {
+        "id": "CR-GBOB",
+        "name": "CrossRoad-GinyeomBimaOguiBogji",
+        "location": {
+            "lat": 37.619571,
+            "lng": 127.059302
+        },
+        "stair": false,
+        "crub": false
+    },
+    {
+        "id": "CR-HBS",
+        "name": "CrossRoad-HwadoBimaSaebit",
+        "location": {
+            "lat": 37.619387,
+            "lng": 127.060871
+        },
+        "stair": false,
+        "crub": false
+    },
+    {
+        "id": "CR-BS",
+        "name": "CrossRoad-BimaSaebit",
+        "location": {
+            "lat": 37.619856,
+            "lng": 127.060398
+        },
+        "stair": false,
+        "crub": false
+    }
+]

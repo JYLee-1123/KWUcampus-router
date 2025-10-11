@@ -1,0 +1,74 @@
+[
+    {
+        "from": "BH-MG",
+        "to": "CR-GBOB",
+        "weight": 1.0,
+        "stair": false,
+        "crub": false,
+        "geometry": []
+    },
+    {
+        "from": "CR-GBOB",
+        "to": "GH-2MG",
+        "weight": 1.0,
+        "stair": false,
+        "crub": false,
+        "geometry": []
+    },
+    {
+        "from": "CR-GBOB",
+        "to": "CR-HBS",
+        "weight": 1.0,
+        "stair": false,
+        "crub": false,
+        "geometry": []
+    },
+    {
+        "from": "CR-HBS",
+        "to": "GH-2MG",
+        "weight": 1.0,
+        "stair": false,
+        "crub": false,
+        "geometry": []
+    },
+    {
+        "from": "CR-HBS",
+        "to": "CR-BS",
+        "weight": 1.0,
+        "stair": false,
+        "crub": false,
+        "geometry": []
+    },
+    {
+        "from": "CR-BS",
+        "to": "BH-SG",
+        "weight": 1.0,
+        "stair": false,
+        "crub": false,
+        "geometry": []
+    },
+    {
+        "from": "CR-BS",
+        "to": "BH-BG",
+        "weight": 1.0,
+        "stair": false,
+        "crub": false,
+        "geometry": []
+    },
+    {
+        "from": "CR-BS",
+        "to": "SH-MG",
+        "weight": 1.0,
+        "stair": false,
+        "crub": false,
+        "geometry": []
+    },
+    {
+        "from": "CR-BS",
+        "to": "CH-MG",
+        "weight": 1.0,
+        "stair": false,
+        "crub": false,
+        "geometry": []
+    }
+]
