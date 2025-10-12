@@ -33,5 +33,7 @@ public class Demo {
             System.out.println("경로: " + String.join(" -> ", res.path));
             System.out.println("총 비용: " + res.cost);
         }
+
+        System.out.println("hello world!");
     }
 }
