@@ -1,0 +1,84 @@
+[
+    {
+        "id": "BimaHall",
+        "name": "비마관",
+        "location": {
+            "lat": 37.6196,
+            "lng": 127.0600
+        },
+        "gates": [
+            "BH-MG",
+            "BH-SG",
+            "BH-BG"
+        ]
+    },
+    {
+        "id": "SaebitHall",
+        "name": "새빛관",
+        "location": {
+            "lat": 37.6198,
+            "lng": 127.0607
+        },
+        "gates": [
+            "SH-MG"
+        ]
+    },
+    {
+        "id": "ChambitHall",
+        "name": "참빛관",
+        "location": {
+            "lat": 37.6193,
+            "lng": 127.0608
+        },
+        "gates": [
+            "CH-MG"
+        ]
+    },
+    {
+        "id": "GinyeomHall",
+        "name": "80주년 기념관",
+        "location": {
+            "lat": 37.6199,
+            "lng": 127.0586
+        },
+        "gates": [
+            "GH-2MG",
+            "GH-1MG",
+            "GH-LFG",
+            "GH-SG"
+        ]
+    },
+    {
+        "id": "OguiHall",
+        "name": "옥의관",
+        "location": {
+            "lat": 37.6188,
+            "lng": 127.0588
+        },
+        "gates": [
+            "OU-MG"
+        ]
+    },
+    {
+        "id": "BogjiHall",
+        "name": "복지관",
+        "location": {
+            "lat": 37.6192,
+            "lng": 127.0583
+        },
+        "gates": [
+            "BJ-SG"
+        ]
+    },
+    {
+        "id": "HwadoHall",
+        "name": "화도관",
+        "location": {
+            "lat": 37.6203,
+            "lng": 127.0594
+        },
+        "gates": [
+            "HH-MG"
+        ]
+    }
+]

@@ -16,7 +16,7 @@
             "lat": 37.619789,
             "lng": 127.060158
         },
-        "stair": false,
+        "stair": true,
         "crub": true
     },
     {
@@ -54,7 +54,7 @@
         "name": "GinyeomHall-2ndFloorMainGate",
         "location": {
             "lat": 37.619949,
-            "lng": 127.508844
+            "lng": 127.058858
         },
         "stair": false,
         "crub": false
@@ -88,7 +88,7 @@
         },
         "stair": false,
         "crub": false
-    }
+    },
     {
         "id": "KWU-BG",
         "name": "KwangwoonUniversity-BackGate",
@@ -98,7 +98,7 @@
         },
         "stair": false,
         "crub": false
-    }
+    },
     {
         "id": "KWU-MG",
         "name": "KwangwoonUniversity-MainGate",
@@ -108,7 +108,7 @@
         },
         "stair": true,
         "crub": true
-    }
+    },
     {
         "id": "CR-GBBS",
         "name": "CrossRoad-GinyeomBimaBogjiStair",
@@ -118,7 +118,7 @@
         },
         "stair": false,
         "crub": false
-    }
+    },
     {
         "id": "OU-MG",
         "name": "OgUiHall-MainGate",
@@ -128,7 +128,7 @@
         },
         "stair": true,
         "crub": true
-    }
+    },
     {
         "id": "OT-MG",
         "name": "OpenairTheater-MainGate",
@@ -138,7 +138,7 @@
         },
         "stair": false,
         "crub": false
-    }
+    },
     {
         "id": "GH-1MG",
         "name": "GinyeomHall-1stFloorMainGate",
@@ -148,7 +148,7 @@
         },
         "stair": false,
         "crub": false
-    }
+    },
     {
         "id": "BJ-SG",
         "name": "BogjiHall-SideGate",
@@ -158,8 +158,8 @@
         },
         "stair": false,
         "crub": false
-    }
-        {
+    },
+    {
         "id": "CT-S",
         "name": "ClockTower-Stair",
         "location": {
@@ -168,7 +168,7 @@
         },
         "stair": true,
         "crub": false
-    }
+    },
     {
         "id": "HH-MG",
         "name": "HwadoHall-MainGate",
@@ -178,7 +178,7 @@
         },
         "stair": false,
         "crub": false
-    }
+    },
     {
         "id": "GH-LFG",
         "name": "GinyeomHall-LobbyFloorGate",
@@ -188,7 +188,7 @@
         },
         "stair": false,
         "crub": false
-    }
+    },
     {
         "id": "GH-SG",
         "name": "GinyeomHall-SideGate",
@@ -199,19 +199,4 @@
         "stair": true,
         "crub": true
     }
-    /*{
-        "id": "BJ-FG",
-        "name": "BojiHall-FloorGate",
-        "location": {
-            "lat": 37.619296,
-            "lng": 127.058359
-        },
-        "stair": true,
-        "crub": false
-    }
-    
-    이 데이터는 디코 사진엔 표시 안되어있는데 
-    사실상 복지관 메인게이트라 우선은 조사하고 주석처리 해놓을게
-    
-    */
 ]
