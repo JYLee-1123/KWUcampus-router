@@ -5,6 +5,7 @@ import com.campus.kwangwoon.graph.Router;
 import com.campus.kwangwoon.model.Node;
 import com.campus.kwangwoon.model.Point;
 import com.campus.kwangwoon.model.BuildingInfo;
+import com.campus.kwangwoon.model.Edge;
 import com.campus.kwangwoon.service.GraphService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -247,5 +248,17 @@ public class RouteController {
         System.out
                 .println("최종 안내 게이트: " + bestResult.path.get(bestResult.path.size() - 1) + ", 비용: " + bestResult.cost);
         return ResponseEntity.ok(bestResult);
+    }
+
+    @GetMapping("/edges")
+    public List<Edge> getAllEdges() {
+        Graph g = graphService.getGraph();
+        List<Edge> allEdges = new ArrayList<>();
+
+        // 그래프의 모든 노드를 돌면서, 연결된 모든 간선을 수집
+        for (Node node : g.nodes()) {
+            allEdges.addAll(g.outgoing(node.getId()));
+        }
+        return allEdges;
     }
 }

@@ -5,13 +5,13 @@
     <meta charset="UTF-8">
     <title>광운대 캠퍼스 길찾기</title>
     <style>
-        /* 지도가 화면 전체를 꽉 채우도록 스타일 설정 */
         body,
         html {
             margin: 0;
             padding: 0;
             width: 100%;
             height: 100%;
+            font-family: 'Noto Sans KR', sans-serif;
         }
 
         #map {
@@ -19,18 +19,85 @@
             height: 100%;
         }
 
-        /* 왼쪽 위에 떠있는 하얀색 박스 스타일 */
+        /* 컨트롤 패널 스타일 */
         .control-panel {
             position: absolute;
-            top: 10px;
-            left: 10px;
+            top: 20px;
+            left: 20px;
             z-index: 10;
-            /* 지도보다 위에 뜨게 함 */
             background: white;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-            width: 300px;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            width: 320px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        h3 {
+            margin: 0 0 10px 0;
+            color: #800020;
+            /* 광운대 상징색 비슷하게 */
+        }
+
+        select,
+        button {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        button {
+            cursor: pointer;
+            background-color: #800020;
+            color: white;
+            border: none;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #600018;
+        }
+
+        button#btn-gps {
+            background-color: #f0f0f0;
+            color: #333;
+            border: 1px solid #ccc;
+        }
+
+        .options {
+            display: flex;
+            gap: 15px;
+            font-size: 14px;
+            align-items: center;
+        }
+
+        .result-box {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 13px;
+            color: #333;
+            min-height: 20px;
+        }
+
+        /* 디버그 모드 스타일 */
+        .debug-box {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            border-radius: 5px;
+            font-size: 13px;
+        }
+
+        .debug-title {
+            font-weight: bold;
+            color: #856404;
+            margin-bottom: 5px;
+            display: block;
         }
     </style>
 </head>
@@ -38,33 +105,276 @@
 <body>
 
     <div class="control-panel">
-        <h3>🚀 광운대 길찾기</h3>
-        <p>지도가 잘 보이면 성공입니다!</p>
+        <h3>🚀 광운대 네비게이션</h3>
+
+        <button id="btn-gps">📍 내 위치 찾기</button>
+        <div id="gps-status" style="font-size: 12px; color: gray;">위치를 찾아주세요.</div>
+
+        <hr style="width: 100%; border: 0.5px solid #eee;">
+
+        <label>목적지 선택:</label>
+        <select id="destination-select">
+            <option value="">빌딩을 선택하세요</option>
+        </select>
+
+        <div class="options">
+            <label><input type="checkbox" id="avoidStair"> 계단 회피 🪜</label>
+            <label><input type="checkbox" id="avoidCrub"> 턱 회피 🦽</label>
+        </div>
+
+        <button id="btn-find">길찾기 시작</button>
+
+        <div id="result-msg" class="result-box">경로 대기 중...</div>
+
+        <div class="debug-box">
+            <span class="debug-title">🛠️ 데이터 검증 (Dev Mode)</span>
+            <label><input type="checkbox" id="chk-show-nodes"> 모든 노드 보기 (🔵)</label><br>
+            <label><input type="checkbox" id="chk-show-edges"> 모든 엣지 보기 (➖)</label>
+        </div>
     </div>
 
     <div id="map"></div>
 
     <script type="text/javascript"
-        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=311249e270cbeaab55beccff189121ab"></script>
+        src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=311249e270cbeaab55beccff189121ab"></script>
 
     <script>
-        // 지도를 담을 영역(div)을 가져옵니다.
-        var container = document.getElementById('map');
-
-        // 지도의 중심좌표(광운대 비마관)와 확대 레벨을 설정합니다.
-        var options = {
-            center: new kakao.maps.LatLng(37.619501, 127.059594),
+        // --- 1. 지도 초기화 ---
+        var mapContainer = document.getElementById('map');
+        var mapOption = {
+            center: new kakao.maps.LatLng(37.619501, 127.059594), // 광운대 중심
             level: 3
         };
+        var map = new kakao.maps.Map(mapContainer, mapOption);
 
-        // 지도를 생성합니다.
-        var map = new kakao.maps.Map(container, options);
+        // 전역 변수들
+        var userLat = null;
+        var userLng = null;
+        var userMarker = null; // 내 위치 마커
+        var currentPolyline = null; // 그려진 경로 선
+        var nodeDataMap = {}; // 노드 ID -> 좌표 정보 매핑용
 
-        // 잘 되는지 확인하기 위해 마커를 하나 찍어봅니다.
-        var marker = new kakao.maps.Marker({
-            position: new kakao.maps.LatLng(37.619501, 127.059594)
+        // 디버깅용 객체들을 담을 배열
+        var debugNodeMarkers = [];
+        var debugEdgePolylines = [];
+
+        // --- 2. 데이터 로딩 (빌딩 목록 & 노드 좌표) ---
+        window.onload = function () {
+            // (1) 빌딩 목록 가져오기 (/api/buildings)
+            fetch('/api/buildings')
+                .then(res => res.json())
+                .then(data => {
+                    const select = document.getElementById('destination-select');
+                    data.forEach(b => {
+                        const option = document.createElement('option');
+                        option.value = b.id; // 예: "BimaHall"
+                        option.text = b.name; // 예: "비마관"
+                        select.appendChild(option);
+                    });
+                })
+                .catch(err => console.error("빌딩 로드 실패:", err));
+
+            // (2) 전체 노드 좌표 가져오기 (/api/nodes) - 경로 그리기용
+            fetch('/api/nodes')
+                .then(res => res.json())
+                .then(data => {
+                    data.forEach(node => {
+                        nodeDataMap[node.id] = node.location; // ID로 좌표를 찾을 수 있게 저장
+                    });
+                    console.log("노드 데이터 로드 완료:", Object.keys(nodeDataMap).length + "개");
+                });
+        };
+
+        // --- 디버그 기능: 노드 보기 ---
+        document.getElementById('chk-show-nodes').addEventListener('change', function (e) {
+            if (e.target.checked) {
+                // 노드 그리기
+                for (const [id, loc] of Object.entries(nodeDataMap)) {
+                    var marker = new kakao.maps.Marker({
+                        position: new kakao.maps.LatLng(loc.lat, loc.lng),
+                        title: id,
+                        image: new kakao.maps.MarkerImage(
+                            'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png', // 카카오 공식 별 이미지
+                            new kakao.maps.Size(24, 35) // 이미지 크기
+                        )
+                    });
+                    marker.setMap(map);
+
+                    // 클릭시 ID 알려주는 인포윈도우 추가 (좌표 확인용)
+                    kakao.maps.event.addListener(marker, 'click', function () {
+                        alert(`Node ID: ${id}\nLat: ${loc.lat}\nLng: ${loc.lng}`);
+                    });
+
+                    debugNodeMarkers.push(marker);
+                }
+            } else {
+                // 지우기
+                debugNodeMarkers.forEach(m => m.setMap(null));
+                debugNodeMarkers = [];
+            }
         });
-        marker.setMap(map);
+
+        // --- 디버그 기능: 엣지 보기 ---
+        document.getElementById('chk-show-edges').addEventListener('change', function (e) {
+            if (e.target.checked) {
+                fetch('/api/edges')
+                    .then(res => res.json())
+                    .then(edges => {
+                        edges.forEach(edge => {
+                            const fromLoc = nodeDataMap[edge.from];
+                            const toLoc = nodeDataMap[edge.to];
+                            if (fromLoc && toLoc) {
+                                var line = new kakao.maps.Polyline({
+                                    path: [
+                                        new kakao.maps.LatLng(fromLoc.lat, fromLoc.lng),
+                                        new kakao.maps.LatLng(toLoc.lat, toLoc.lng)
+                                    ],
+                                    strokeWeight: 3,
+                                    strokeColor: '#A0A0A0', // 회색
+                                    strokeOpacity: 0.6,
+                                    strokeStyle: 'solid'
+                                });
+                                line.setMap(map);
+                                debugEdgePolylines.push(line);
+                            }
+                        });
+                        alert(`총 ${edges.length}개의 엣지를 그렸습니다.`);
+                    });
+            } else {
+                debugEdgePolylines.forEach(line => line.setMap(null));
+                debugEdgePolylines = [];
+            }
+        });
+
+        // --- 3. GPS 내 위치 찾기 ---
+        document.getElementById('btn-gps').addEventListener('click', function () {
+            if (navigator.geolocation) {
+                document.getElementById('gps-status').innerText = "위치 확인 중...";
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        userLat = position.coords.latitude;
+                        userLng = position.coords.longitude;
+
+                        var locPosition = new kakao.maps.LatLng(userLat, userLng);
+                        document.getElementById('gps-status').innerText = "내 위치: 확인됨 ✅";
+
+                        // 마커 표시 및 지도 이동
+                        if (userMarker) userMarker.setMap(null);
+                        userMarker = new kakao.maps.Marker({ map: map, position: locPosition });
+                        map.setCenter(locPosition);
+                    },
+                    (err) => {
+                        alert("위치를 가져올 수 없습니다. GPS를 켜주세요.");
+                        document.getElementById('gps-status').innerText = "위치 확인 실패";
+                    }
+                );
+            } else {
+                alert("이 브라우저는 GPS를 지원하지 않습니다.");
+            }
+        });
+
+        // --- 3-1. [추가됨] 지도 클릭 이벤트 ---
+        kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
+            // 클릭한 위도, 경도 정보를 가져옵니다 
+            var latlng = mouseEvent.latLng;
+
+            // 마커 위치를 클릭한 위치로 옮깁니다
+            updateUserLocation(latlng.getLat(), latlng.getLng(), "내 위치: 지도에서 선택됨 👆");
+        });
+
+        // [공통 함수] 사용자 위치 업데이트 및 마커 표시
+        function updateUserLocation(lat, lng, msg) {
+            userLat = lat;
+            userLng = lng;
+
+            var locPosition = new kakao.maps.LatLng(lat, lng);
+            document.getElementById('gps-status').innerText = msg;
+            document.getElementById('gps-status').style.color = "#006400"; // 진한 녹색
+
+            // 기존 마커 있으면 제거 후 새로 생성 (혹은 이동)
+            if (userMarker) {
+                userMarker.setMap(null);
+            }
+
+            // 내 위치 마커 생성 (이미지 등을 다르게 할 수도 있음)
+            userMarker = new kakao.maps.Marker({
+                map: map,
+                position: locPosition
+            });
+
+            // 지도 중심을 내 위치로 부드럽게 이동하지 않음 (클릭 시 불편할 수 있어서)
+            // GPS 버튼 눌렀을 때만 이동하고 싶으면 로직 분리 가능. 여기서는 클릭 편의성을 위해 중심 이동은 뺌.
+        }
+
+        // --- 4. 길찾기 요청 및 그리기 ---
+        document.getElementById('btn-find').addEventListener('click', function () {
+            // 입력값 검증
+            if (!userLat || !userLng) {
+                alert("먼저 '내 위치 찾기'를 눌러주세요!");
+                return;
+            }
+            const buildingId = document.getElementById('destination-select').value;
+            if (!buildingId) {
+                alert("목적지 건물을 선택해주세요.");
+                return;
+            }
+
+            const avoidStair = document.getElementById('avoidStair').checked;
+            const avoidCrub = document.getElementById('avoidCrub').checked;
+
+            // API 호출 (/api/find)
+            const url = `/api/find?lat=${userLat}&lng=${userLng}&building=${buildingId}&avoidStair=${avoidStair}&avoidCrub=${avoidCrub}`;
+
+            document.getElementById('result-msg').innerText = "경로 탐색 중...";
+
+            fetch(url)
+                .then(res => {
+                    if (!res.ok) throw new Error("경로를 찾을 수 없습니다.");
+                    return res.json();
+                })
+                .then(result => {
+                    // 결과 처리
+                    document.getElementById('result-msg').innerText =
+                        `거리: ${result.cost}m (경로 노드 ${result.path.length}개)`;
+
+                    drawPath(result.path); // 경로 그리기 함수 호출
+                })
+                .catch(err => {
+                    alert("경로를 찾지 못했습니다. (옵션을 변경해보세요)");
+                    document.getElementById('result-msg').innerText = "경로 없음 ❌";
+                    if (currentPolyline) currentPolyline.setMap(null);
+                });
+        });
+
+        // --- 5. 지도에 선 그리기 (Polyline) ---
+        function drawPath(pathNodeIds) {
+            // 기존 선 지우기
+            if (currentPolyline) currentPolyline.setMap(null);
+
+            // 노드 ID 리스트 -> 카카오 좌표 리스트로 변환
+            var linePath = [];
+            pathNodeIds.forEach(id => {
+                const loc = nodeDataMap[id]; // 아까 저장해둔 노드 맵에서 좌표 찾기
+                if (loc) {
+                    linePath.push(new kakao.maps.LatLng(loc.lat, loc.lng));
+                }
+            });
+
+            // 지도에 선 긋기
+            currentPolyline = new kakao.maps.Polyline({
+                path: linePath,
+                strokeWeight: 6, // 선 두께
+                strokeColor: '#FF0000', // 선 색깔 (빨강)
+                strokeOpacity: 0.8, // 선 투명도
+                strokeStyle: 'solid' // 선 스타일
+            });
+            currentPolyline.setMap(map);
+
+            // 경로가 다 보이도록 지도 범위 재설정
+            var bounds = new kakao.maps.LatLngBounds();
+            linePath.forEach(coord => bounds.extend(coord));
+            map.setBounds(bounds);
+        }
     </script>
 </body>
 
