@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>광운대 캠퍼스 길찾기</title>
+    <style>
+        /* 지도가 화면 전체를 꽉 채우도록 스타일 설정 */
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* 왼쪽 위에 떠있는 하얀색 박스 스타일 */
+        .control-panel {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 10;
+            /* 지도보다 위에 뜨게 함 */
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            width: 300px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="control-panel">
+        <h3>🚀 광운대 길찾기</h3>
+        <p>지도가 잘 보이면 성공입니다!</p>
+    </div>
+
+    <div id="map"></div>
+
+    <script type="text/javascript"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=311249e270cbeaab55beccff189121ab"></script>
+
+    <script>
+        // 지도를 담을 영역(div)을 가져옵니다.
+        var container = document.getElementById('map');
+
+        // 지도의 중심좌표(광운대 비마관)와 확대 레벨을 설정합니다.
+        var options = {
+            center: new kakao.maps.LatLng(37.619501, 127.059594),
+            level: 3
+        };
+
+        // 지도를 생성합니다.
+        var map = new kakao.maps.Map(container, options);
+
+        // 잘 되는지 확인하기 위해 마커를 하나 찍어봅니다.
+        var marker = new kakao.maps.Marker({
+            position: new kakao.maps.LatLng(37.619501, 127.059594)
+        });
+        marker.setMap(map);
+    </script>
+</body>
+
+</html>
