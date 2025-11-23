@@ -93,10 +93,10 @@
         "id": "KWU-BG",
         "name": "KwangwoonUniversity-BackGate",
         "location": {
-            "lat": 37.6620234,
-            "lng": 127.061077
+            "lat":  37.620241,
+            "lng": 127.061109
         },
-        "stair": false,
+        "stair": true,
         "crub": false
     },
     {
@@ -198,5 +198,15 @@
         },
         "stair": true,
         "crub": true
+    },
+    {
+        "id": "GH-2SG",
+        "name": "GinyeomHall-2ndFloorSideGate",
+        "location": {
+            "lat": 37.620474,
+            "lng": 127.058955
+        },
+        "stair": false,
+        "crub": false
     }
 ]
