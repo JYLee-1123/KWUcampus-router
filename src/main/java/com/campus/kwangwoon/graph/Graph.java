@@ -103,6 +103,9 @@ public class Graph {
                 throw new IllegalArgumentException("Edge.from not found: " + e.getFrom());
             if (!nodesById.containsKey(e.getTo()))
                 throw new IllegalArgumentException("Edge.to not found: " + e.getTo());
+            /*
+             * 위도 경도 데이터 사용해서 실제 거리 계산 로직 추가. 실제 계산하는 로직은 함수 정의해서 사용하면 될 듯
+             */
             if (Double.isNaN(e.getWeight()) || e.getWeight() <= 0)
                 throw new IllegalArgumentException("Edge.weight must be >0: " + e);
 
