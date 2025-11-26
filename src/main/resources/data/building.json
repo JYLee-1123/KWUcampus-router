@@ -83,6 +83,40 @@
         ]
     },
     {
+        "id": "NuriHall",
+        "name": "누리관",
+        "location": {
+            "lat": 37.6204,
+            "lng": 127.0549
+        },
+        "gates": [
+            "NH-MG"
+        ]
+    },
+    {
+        "id": "HanulHall",
+        "name": "한울관",
+        "location": {
+            "lat": 37.6206,
+            "lng": 127.0570
+        },
+        "gates": [
+            "HuH-MG",
+            "HuH-BG"
+        ]
+    },
+    {  
+        "id": "YeonguHall",
+        "name": "연구관",
+        "location": {
+            "lat": 37.6195,
+            "lng": 127.0576
+        },
+        "gates": [
+            "YH-MG"
+        ]
+    },
+    {
         "id": "KwangwoonUniversityBackGate",
         "name": "후문",
         "location": {

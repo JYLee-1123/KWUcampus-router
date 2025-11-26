@@ -70,11 +70,121 @@
         "crub": false
     },
     {
+        "id": "CR-N1",
+        "name": "CrossRoad-Nuri1",
+        "location": {
+            "lat": 37.618982,
+            "lng": 127.056481
+        },
+        "stair": false,
+        "crub": false
+    },
+    {
+        "id": "CR-N2",
+        "name": "CrossRoad-Nuri2",
+        "location": {
+            "lat": 37.619614,
+            "lng": 127.057275
+        },
+        "stair": false,
+        "crub": false
+    },
+    {
+        "id": "CR-HH",
+        "name": "CrossRoad-HanulHanul",
+        "location": {
+            "lat": 37.620536,
+            "lng": 127.057292
+        },
+        "stair": false,
+        "crub": false
+    },
+    {
+        "id": "CR-1.1",
+        "name": "CrossRoad-1.1",
+        "location": {
+            "lat": 37.619229,
+            "lng": 127.057773
+        },
+        "stair": false,
+        "crub": false
+    },
+    {
+        "id": "CR-1.2",
+        "name": "CrossRoad-1.2",
+        "location": {
+            "lat": 37.619155,
+            "lng": 127.057985
+        },
+        "stair": false,
+        "crub": false
+    },
+    {
+        "id": "CR-2.1",
+        "name": "CrossRoad-2.1",
+        "location": {
+            "lat": 37.619582,
+            "lng": 127.057974
+        },
+        "stair": false,
+        "crub": false
+    },
+    {
+        "id": "CR-2.2",
+        "name": "CrossRoad-2.2",
+        "location": {
+            "lat": 37.619497,
+            "lng": 127.058189
+        },
+        "stair": false,
+        "crub": false
+    },
+    {
+        "id": "CR-3.1",
+        "name": "CrossRoad-3.1",
+        "location": {
+            "lat": 37.619997,
+            "lng": 127.058261
+        },
+        "stair": false,
+        "crub": false
+    },
+    {
+        "id": "CR-3.2",
+        "name": "CrossRoad-3.2",
+        "location": {
+            "lat": 37.619911,
+            "lng": 127.058470
+        },
+        "stair": false,
+        "crub": false
+    },
+    {
+        "id": "CR-4",
+        "name": "CrossRoad-4lane",
+        "location": {
+            "lat": 37.618389,
+            "lng": 127.057237
+        },
+        "stair": false,
+        "crub": false
+    },
+    {
         "id": "CR-HBS",
         "name": "CrossRoad-HwadoBimaSaebit",
         "location": {
             "lat": 37.620043,
             "lng": 127.059784
+        },
+        "stair": false,
+        "crub": false
+    },
+    {
+        "id": "CR-DH",
+        "name": "CrossRoad-DongheaHanul",
+        "location": {
+            "lat": 37.620148,
+            "lng": 127.057408
         },
         "stair": false,
         "crub": false
@@ -208,5 +318,45 @@
         },
         "stair": false,
         "crub": false
+        },
+    {
+        "id": "NH-MG",
+        "name": "NuriHall-MainGate",
+        "location": {
+            "lat": 37.620095,
+            "lng": 127.054797
+        },
+        "stair": true,
+        "crub": true
+    },
+    {
+        "id": "HuH-MG",
+        "name": "HanulHall-MainGate",
+        "location": {
+            "lat": 37.620822,
+            "lng": 127.057194
+        },
+        "stair": true,
+        "crub": true
+    },
+    {
+        "id": "HuH-BG",
+        "name": "HanulHall-BasementGate",
+        "location": {
+            "lat": 37.620515,
+            "lng": 127.057168
+        },
+        "stair": true,
+        "crub": false
+    },
+    {
+        "id": "YH-MG",
+        "name": "YeonguHall-MainGate",
+        "location": {
+            "lat": 37.619544,
+            "lng": 127.057748
+        },
+        "stair": true,
+        "crub": true
     }
 ]
