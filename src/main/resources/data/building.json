@@ -81,5 +81,38 @@
         "gates": [
             "HH-MG"
         ]
+    },
+    {
+        "id": "KwangwoonUniversityBackGate",
+        "name": "후문",
+        "location": {
+            "lat": 37.6202,
+            "lng": 127.0611
+        },
+        "gates": [
+            "KWU-BG"
+        ]
+    },
+    {
+        "id": "ClockTower",
+        "name": "시계탑",
+        "location": {
+            "lat": 37.6198,
+            "lng": 127.0584
+        },
+        "gates": [
+            "CT-S"
+        ]
+    },
+    {
+        "id": "KwangwoonUniversityMainGate",
+        "name": "정문",
+        "location": {
+            "lat": 37.6192,
+            "lng": 127.0581
+        },
+        "gates": [
+            "KWU-MG"
+        ]
     }
 ]

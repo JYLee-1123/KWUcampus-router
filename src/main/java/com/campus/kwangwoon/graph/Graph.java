@@ -103,9 +103,21 @@ public class Graph {
                 throw new IllegalArgumentException("Edge.from not found: " + e.getFrom());
             if (!nodesById.containsKey(e.getTo()))
                 throw new IllegalArgumentException("Edge.to not found: " + e.getTo());
+            // 1. 노드 객체 가져오기
+            Node u = nodesById.get(e.getFrom());
+            Node v = nodesById.get(e.getTo());
+
             /*
-             * 위도 경도 데이터 사용해서 실제 거리 계산 로직 추가. 실제 계산하는 로직은 함수 정의해서 사용하면 될 듯
+             * JSON에 weight가 있든 없든 무조건 실제 물리적 거리를 계산해서 덮어씌움.
+             * 파일 내용은 변하지 않고, 메모리 상에서만 정확한 거리로 동작함.
              */
+            double distance = calculateDistance(u, v);
+            e.setWeight(distance);
+
+            // 유효성 검사 (계산된 거리가 0 이하인지 체크)
+            if (e.getWeight() <= 0)
+                throw new IllegalArgumentException(
+                        "Calculated weight must be >0. Check coordinates: " + e.getFrom() + " -> " + e.getTo());
             if (Double.isNaN(e.getWeight()) || e.getWeight() <= 0)
                 throw new IllegalArgumentException("Edge.weight must be >0: " + e);
 
@@ -151,5 +163,43 @@ public class Graph {
         int m = edgeCount();
         return String.format("Graph: nodes=%d, arcs=%d (directed=%s, unit=%s, schema=%s)",
                 n, m, meta.directed, meta.unit, meta.schemaVersion);
+    }
+
+    private static final double EARTH_RADIUS_METERS = 6_371_000.0;
+
+    /**
+     * 두 노드(Node) 간의 실제 거리(미터)를 계산하는 헬퍼 메서드
+     */
+    private static double calculateDistance(Node from, Node to) {
+        // 데이터 방어 로직: 좌표 정보가 없으면 에러
+        if (from.getLocation() == null || to.getLocation() == null) {
+            throw new IllegalArgumentException("Location missing for node: " +
+                    (from.getLocation() == null ? from.getId() : to.getId()));
+        }
+
+        // Node -> Point -> lat, lng 추출 (Point.java에 getLng() 확인됨)
+        return calculateDistance(
+                from.getLocation().getLat(),
+                from.getLocation().getLng(),
+                to.getLocation().getLat(),
+                to.getLocation().getLng());
+    }
+
+    /**
+     * Haversine 공식을 이용한 실제 물리적 거리 계산 엔진
+     */
+    private static double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
+        double lat1Rad = Math.toRadians(lat1);
+        double lat2Rad = Math.toRadians(lat2);
+        double deltaLat = Math.toRadians(lat2 - lat1);
+        double deltaLon = Math.toRadians(lon2 - lon1);
+
+        double a = Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2)
+                + Math.cos(lat1Rad) * Math.cos(lat2Rad)
+                        * Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2);
+
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        return EARTH_RADIUS_METERS * c;
     }
 }
