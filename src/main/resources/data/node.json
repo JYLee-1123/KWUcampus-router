@@ -203,7 +203,7 @@
         "id": "KWU-BG",
         "name": "KwangwoonUniversity-BackGate",
         "location": {
-            "lat":  37.620241,
+            "lat": 37.620241,
             "lng": 127.061109
         },
         "stair": true,
@@ -318,7 +318,7 @@
         },
         "stair": false,
         "crub": false
-        },
+    },
     {
         "id": "NH-MG",
         "name": "NuriHall-MainGate",
@@ -326,8 +326,8 @@
             "lat": 37.620095,
             "lng": 127.054797
         },
-        "stair": true,
-        "crub": true
+        "stair": false,
+        "crub": false
     },
     {
         "id": "HuH-MG",
@@ -346,7 +346,7 @@
             "lat": 37.620515,
             "lng": 127.057168
         },
-        "stair": true,
+        "stair": false,
         "crub": false
     },
     {

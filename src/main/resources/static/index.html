@@ -340,7 +340,7 @@
                     drawPath(result.path); // 경로 그리기 함수 호출
                 })
                 .catch(err => {
-                    alert("경로를 찾지 못했습니다. (옵션을 변경해보세요)");
+                    alert("경로를 찾지 못했습니다. (계단, 턱이 없는 경로가 제공되지 않습니다)");
                     document.getElementById('result-msg').innerText = "경로 없음 ❌";
                     if (currentPolyline) currentPolyline.setMap(null);
                 });
