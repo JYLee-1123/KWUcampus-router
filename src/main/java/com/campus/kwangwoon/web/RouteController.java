@@ -6,16 +6,17 @@ import com.campus.kwangwoon.model.Node;
 import com.campus.kwangwoon.model.Point;
 import com.campus.kwangwoon.model.BuildingInfo;
 import com.campus.kwangwoon.model.Edge;
+import com.campus.kwangwoon.model.Feedback; // [추가] Entity
+import com.campus.kwangwoon.model.FeedbackRequest; // [추가] DTO
+import com.campus.kwangwoon.repository.FeedbackRepository; // [추가] Repository
 import com.campus.kwangwoon.service.GraphService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;
@@ -27,6 +28,35 @@ public class RouteController {
     // @Autowired: Spring Boot가 2단계에서 만든 GraphService를 여기에 자동으로 연결
     @Autowired
     private GraphService graphService;
+
+    @Autowired
+    private FeedbackRepository feedbackRepository;
+
+    // 1. [사용자용] 불편 신고 접수 (DB에 저장)
+    @PostMapping("/feedback")
+    public ResponseEntity<String> receiveFeedback(@RequestBody FeedbackRequest req) {
+        // 받은 요청(Request)을 DB용 객체(Entity)로 변환
+        Feedback feedback = new Feedback(
+                req.getCategory(),
+                req.getContent(),
+                req.getLat(),
+                req.getLng());
+
+        // DB 저장 (INSERT)
+        feedbackRepository.save(feedback);
+
+        System.out.println("📢 DB 저장됨: " + feedback.getContent());
+        return ResponseEntity.ok("접수 완료");
+    }
+
+    // 2. [운영자용] 신고 목록 조회 (DB에서 조회)
+    @GetMapping("/feedback")
+    public List<Feedback> getFeedbackList() {
+        // DB 조회 (SELECT)
+        List<Feedback> list = feedbackRepository.findAll();
+        Collections.reverse(list); // 최신순 정렬
+        return list;
+    }
 
     // ▼▼▼ [신규] 프론트엔드용 API: 빌딩 목록 전체 반환 ▼▼▼
     /**
