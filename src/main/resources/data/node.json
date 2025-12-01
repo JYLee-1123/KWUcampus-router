@@ -216,8 +216,8 @@
             "lat": 37.619256,
             "lng": 127.058137
         },
-        "stair": true,
-        "crub": true
+        "stair": false,
+        "crub": false
     },
     {
         "id": "CR-GBBS",

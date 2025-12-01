@@ -390,5 +390,13 @@
         "stair": false,
         "crub": false,
         "geometry": []
+    },
+    {
+        "from": "OU-MG",
+        "to": "BJ-SG",
+        "weight": 1.0,
+        "stair": false,
+        "crub": false,
+        "geometry": []
     }
 ]
