@@ -236,8 +236,8 @@
             "lat": 37.618829,
             "lng": 127.058897
         },
-        "stair": true,
-        "crub": true
+        "stair": false,
+        "crub": false
     },
     {
         "id": "OT-MG",
